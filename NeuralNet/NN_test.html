@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="module" src="./NN.js"></script>
+</head>
+<body>
+<script type="module">
+
+    import {Layer, NeuralNetwork} from "./NN.js";
+
+    const xor = [
+        [[0,0], [0]],
+        [[1,0], [1]],
+        [[0,1], [1]],
+        [[1,1], [0]]
+    ];
+
+    let nn = new NeuralNetwork();
+    nn.add_layer(new Layer(2));
+    nn.add_layer(new Layer(6));
+    nn.add_layer(new Layer(3));
+    nn.add_layer(new Layer(1));
+    nn.setLearningRate(0.3);
+    console.log('before training: ');
+    console.log(nn.predict([1,0]).serialize());
+
+    for(let i = 0; i < 100000; i++) {
+        let sample = xor[Math.floor(Math.random() * xor.length)];
+        nn.train(sample[0], sample[1]);
+    }
+
+    console.log('after training: ');
+    console.log(nn.predict([1,0]).serialize());
+</script>
+</body>
+</html>
