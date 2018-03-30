@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="module" src="./NN.js"></script>
+</head>
+<body>
+<div id="layers-container" style="outline: 1px solid red; margin: auto; display: inline-block">
+    <div style="text-align: center; padding: 20px"><u><b>training on XOR data-set:</b></u></div>
+    <table style="width: 100%; text-align: center;">
+        <tr>
+            <th>input layer</th>
+            <th>hidden 1</th>
+            <th>hidden 2</th>
+            <th>output layer</th>
+        </tr>
+
+        <tr>
+            <td>
+                <canvas style="outline: 1px solid red;" class="canvas" width="100" height="100"></canvas>
+            </td>
+            <td>
+                <canvas style="outline: 1px solid red;" class="canvas" width="100" height="100"></canvas>
+            </td>
+            <td>
+                <canvas style="outline: 1px solid red;" class="canvas" width="100" height="100"></canvas>
+            </td>
+            <td>
+                <canvas style="outline: 1px solid red;" class="canvas" width="100" height="100"></canvas>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding: 20px">
+        Each "pixel" stands for the node's value (ranging from 0 = white to 1 = black)
+    </div>
+</div>
+<script type="module">
+
+    import {Layer, NeuralNetwork} from "./NN.js";
+    import {NetworkRenderer} from "./Visualisation/NetworkRenderer.js";
+
+    const xor = [
+        [[0,0], [0]],
+        [[1,0], [1]],
+        [[0,1], [1]],
+        [[1,1], [0]]
+    ];
+
+    let nn = new NeuralNetwork();
+    nn.add_layer(new Layer(2));
+    nn.add_layer(new Layer(6));
+    nn.add_layer(new Layer(3));
+    nn.add_layer(new Layer(1));
+    nn.setLearningRate(0.3);
+    console.log('before training: ');
+    console.log(nn.predict([1,0]).serialize());
+
+    let renderer = new NetworkRenderer(nn, document.getElementById("layers-container"), true);
+
+    setInterval(() => {
+        let sample = xor[Math.floor(Math.random() * xor.length)];
+        let prediction = nn.train(sample[0], sample[1]);
+        renderer.draw();
+    }, 100);
+
+    console.log('after training: ');
+    console.log(nn.predict([1,0]).serialize());
+</script>
+</body>
+</html>
