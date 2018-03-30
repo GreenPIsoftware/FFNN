@@ -104,7 +104,7 @@ export class NeuralNetwork {
 
         //--------------------hidden to out adjusted---------------------//
 
-        //backprop hidden layers
+        //back-prop hidden layers
         for(let i = this.layers.length - 1; --i;) {
 
             let layer = this.layers[i];
@@ -130,6 +130,8 @@ export class NeuralNetwork {
             // Adjust the bias by its deltas (which is just the gradients)
             layer.bias.add(hidden_gradient);
         }
+
+        return this.layers[this.layers.length - 1].get_input();
     }
 
     serialize() {

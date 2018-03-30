@@ -6,9 +6,11 @@
     <script type="module" src="./NN.js"></script>
 </head>
 <body>
+<canvas id="test_canvas" width="100" height="100"></canvas>
 <script type="module">
 
     import {Layer, NeuralNetwork} from "./NN.js";
+    import {LayerRenderer} from "../Visualisation/LayerRenderer";
 
     const xor = [
         [[0,0], [0]],
@@ -26,9 +28,12 @@
     console.log('before training: ');
     console.log(nn.predict([1,0]).serialize());
 
+    let renderer = new LayerRenderer(document.getElementById("test_canvas"), nn.layers[nn.layers.length - 1]);
+
     for(let i = 0; i < 100000; i++) {
         let sample = xor[Math.floor(Math.random() * xor.length)];
-        nn.train(sample[0], sample[1]);
+        let prediction = nn.train(sample[0], sample[1]);
+        renderer.draw();
     }
 
     console.log('after training: ');

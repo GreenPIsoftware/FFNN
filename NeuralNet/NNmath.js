@@ -31,7 +31,7 @@ export class Matrix {
             .map((_, i, j) => a.data[i][j] - b.data[i][j]);
     }
 
-    toArray() {
+    to_array() {
         let arr = [];
         for (let i = 0; i < this.n_rows; i++) {
             for (let j = 0; j < this.n_cols; j++) {
