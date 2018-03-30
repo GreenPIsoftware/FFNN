@@ -136,21 +136,4 @@ export class NeuralNetwork {
 
         return this.layers[this.layers.length - 1].get_input();
     }
-
-    serialize() {
-        return JSON.stringify(this);
-    }
-
-    static deserialize(data) {
-        if (typeof data === 'string') {
-            data = JSON.parse(data);
-        }
-        let nn = new NeuralNetwork(data.input_nodes, data.hidden_nodes, data.output_nodes);
-        nn.weights_ih = Matrix.deserialize(data.weights_ih);
-        nn.weights_ho = Matrix.deserialize(data.weights_ho);
-        nn.bias_h = Matrix.deserialize(data.bias_h);
-        nn.bias_o = Matrix.deserialize(data.bias_o);
-        nn.learning_rate = data.learning_rate;
-        return nn;
-    }
 }
