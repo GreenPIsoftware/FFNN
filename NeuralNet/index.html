@@ -4,10 +4,47 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="module" src="./NN.js"></script>
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div id="layers-container" style="outline: 1px solid red; margin: auto; display: inline-block">
     <div style="text-align: center; padding: 20px"><u><b>training on XOR data-set:</b></u></div>
+    <div id="error-label" style="text-align: center;"></div>
     <table style="width: 100%; text-align: center;">
         <tr>
             <th>input layer</th>
@@ -34,6 +71,16 @@
     <div style="text-align: center; padding: 20px">
         Each "pixel" stands for the node's value (ranging from 0 = white to 1 = black)
     </div>
+    <div>
+        <p style="text-align: center;">LEARNING-RATE:</p>
+        <div id="learning_rate"></div>
+        <input id="learning_rate_slider" type="range" min="0.01" max="0.6" step="0.05" value="0.3" class="slider">
+    </div>
+    <div>
+        <p style="text-align: center;">TICK-RATE:</p>
+        <div id="tick_rate"></div>
+        <input id="tick_rate_slider" type="range" min="1" max="500" step="1" value="100" class="slider">
+    </div>
 </div>
 <script type="module">
 
@@ -57,15 +104,40 @@
     console.log(nn.predict([1,0]).serialize());
 
     let renderer = new NetworkRenderer(nn, document.getElementById("layers-container"), true);
+    let error_label = document.getElementById("error-label");
 
-    setInterval(() => {
+    let learning_rate_slider = document.getElementById("learning_rate_slider");
+    let learning_rate_div = document.getElementById("learning_rate");
+    learning_rate_slider.value = nn.learning_rate;
+    learning_rate_div.innerText = nn.learning_rate;
+
+    learning_rate_slider.oninput = function() {
+        learning_rate_div.innerText = this.value;
+        nn.setLearningRate(this.value);
+    };
+
+    let tick_rate_slider = document.getElementById("tick_rate_slider");
+    let tick_rate_div = document.getElementById("tick_rate");
+    let training_tick_rate = tick_rate_slider.value;
+    tick_rate_div.innerText = training_tick_rate + " ms";
+
+    tick_rate_slider.oninput = function() {
+        console.log(this.value);
+        training_tick_rate = this.value;
+        tick_rate_div.innerText = this.value + " ms";
+    };
+
+    const train_network = () => {
         let sample = xor[Math.floor(Math.random() * xor.length)];
         let prediction = nn.train(sample[0], sample[1]);
+        error_label.innerText = nn.sqrt_error;
         renderer.draw();
-    }, 100);
 
-    console.log('after training: ');
-    console.log(nn.predict([1,0]).serialize());
+        setTimeout(train_network, training_tick_rate);
+    };
+
+
+    train_network();
 </script>
 </body>
 </html>

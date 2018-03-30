@@ -49,6 +49,7 @@ export class NeuralNetwork {
     constructor() {
         this.layers = [];
         this.setLearningRate();
+        this.error = 1;
     }
 
     add_layer(layer) {
@@ -86,6 +87,8 @@ export class NeuralNetwork {
 
         let outputs = this.predict(input_array);
         let output_errors = Matrix.sub(targets, outputs);
+
+        this.sqrt_error = output_errors.to_array().reduce((sum, error) => sum + Math.abs(error), 0);
 
         //output layer:
 
