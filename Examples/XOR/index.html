@@ -85,7 +85,7 @@
 <script type="module">
 
     import {Layer, NeuralNetwork} from "../../library/NN.js";
-    import {NetworkRenderer} from "./NetworkRenderer.js";
+    import {NetworkRenderer} from "./Visualisation/NetworkRenderer.js";
 
     const xor = [
         [[0,0], [0]],
@@ -103,7 +103,7 @@
     console.log('before training: ');
     console.log(nn.predict([1,0]).serialize());
 
-    let renderer = new NetworkRenderer(nn, document.getElementById("layers-container"));
+    let renderer = new NetworkRenderer(nn, document.getElementById("layers-container"), true);
     let error_label = document.getElementById("error-label");
 
     let learning_rate_slider = document.getElementById("learning_rate_slider");
