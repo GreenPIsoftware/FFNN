@@ -1,3 +1,8 @@
+/***
+ * thanks to Daniel Shiffman for providing this
+ * https://github.com/CodingTrain/Toy-Neural-Network-JS/blob/master/lib/matrix.js
+ */
+
 export class Matrix {
 
     constructor(n_rows, n_cols) {

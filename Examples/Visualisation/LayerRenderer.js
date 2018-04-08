@@ -7,7 +7,6 @@ const max_square = (area) => {
 
     sq = sq - (sq % 1);
     for(let i = sq; i > 0; i--) {
-        console.log(i);
         if(area % i === 0) {
             return {w:area/i, h:i};
         }

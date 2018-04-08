@@ -1,6 +1,6 @@
-import {Matrix} from "./NNmath.js";
+import {Matrix} from "./Matrix.js";
 
-class ActivationFunction {
+export class ActivationFunction {
 
     constructor(func, d_func) {
         this.f = func;
