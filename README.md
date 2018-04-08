@@ -3,7 +3,7 @@
 ![Travis](https://img.shields.io/badge/performance-good-green.svg)
 ![Travis](https://img.shields.io/badge/built%20with-%F0%9F%A7%A0%F0%9F%A7%A0-green.svg)
 
-is a deep learning library aimed to the purpose of understanding the basics of multilyer artificial neural networks.
+...is a deep learning library aimed to the purpose of understanding the basics of multilyer artificial neural networks.
 
 ## super simple to use!
 ```javascript
@@ -32,7 +32,7 @@ nn.train(input_array, target_array);
 //predict value
 let prediction = nn.predict(input_array);
 
-//be happy about ML
+//have fun, make something cool
 ```
 
 
