@@ -1,4 +1,4 @@
-# VinzNet
+# FFNN
 
 ![Travis](https://img.shields.io/badge/performance-good-green.svg)
 ![Travis](https://img.shields.io/badge/built%20with-%F0%9F%A7%A0%F0%9F%A7%A0-green.svg)
